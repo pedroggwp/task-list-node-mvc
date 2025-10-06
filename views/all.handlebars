@@ -1,0 +1,22 @@
+<h2>Todas as Tarefas:</h2>
+{{#if tasks.length}}
+  <ul>
+    {{#each tasks}}
+      <li>
+        <b>{{this.title}}</b> - {{this.description}} - 
+        {{#if this.done}}
+            ✅ Concluída
+        {{else}}
+            🕗 Pendente
+        {{/if}}
+        <a href="/tasks/edit/{{this.id}}">Editar</a>
+        <form style="display:inline;" method="post" action="/tasks/delete">
+          <input type="hidden" name="id" value="{{this.id}}"/>
+          <button type="submit">Excluir</button>
+        </form>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>🎉 Nenhuma tarefa cadastrada. Que tal criar uma nova?</p>
+{{/if}}
