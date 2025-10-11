@@ -7,7 +7,7 @@ const taskRoutes = require("./routes/taskRoutes");
 
 // 2. INICIALIZAÇÃO DO EXPRESS
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // 3. CONFIGURAÇÃO DE MIDDLEWARES
 app.use(express.urlencoded({ extended: true }));

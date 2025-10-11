@@ -1,0 +1,304 @@
+/* Estilos globais */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #F8F8FF;
+  color: #333333;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Layout principal */
+header {
+  background: linear-gradient(135deg, #6A0DAD 0%, #9370DB 50%, #DDA0DD 100%);
+  color: #fff;
+  padding: 32px 0 16px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(106, 13, 173, 0.08);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  animation: slideInDown 0.6s ease-out;
+}
+
+nav {
+  margin-top: 8px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 8px;
+  font-weight: 500;
+  transition: text-decoration 0.2s;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #E6E6FA;
+  margin: 0;
+}
+
+main {
+  max-width: 600px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 24px;
+  min-height: 300px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  main {
+    padding: 12px;
+  }
+  header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Animações */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos personalizados para a aplicação de tarefas */
+.task-completed {
+  @apply line-through opacity-60;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.task-card {
+  @apply bg-card border border-border rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out;
+  animation: slideInUp 0.4s ease-out;
+}
+
+.task-card:hover {
+  @apply border-primary/30 shadow-lg;
+  transform: translateY(-2px);
+}
+
+.task-card:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  @apply bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-200 ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground transition-all duration-200 ease-in-out;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.3);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  @apply hover:opacity-90 text-gray-800 transition-all duration-200 ease-in-out;
+}
+
+.btn-warning:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.status-completed {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+  animation: bounce 0.6s ease-in-out;
+}
+
+.status-pending {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400;
+}
+
+/* Gradient header */
+.gradient-header {
+  background: linear-gradient(135deg, #6A0DAD 0%, #9370DB 50%, #DDA0DD 100%);
+  animation: slideInDown 0.6s ease-out;
+}
+
+/* Animações para estatísticas */
+.stats-card {
+  animation: fadeIn 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.stats-card:hover {
+  transform: scale(1.02);
+}
+
+.stats-number {
+  animation: pulse 2s infinite;
+}
+
+/* Animações para formulários */
+.form-input {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.form-input:focus {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+}
+
+/* Animações para filtros */
+.filter-button {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.filter-button:hover {
+  transform: translateY(-1px);
+}
+
+.filter-button.active {
+  animation: pulse 0.3s ease-in-out;
+}
+
+/* Animações para ações de tarefa */
+.task-action-button {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.task-action-button:hover {
+  transform: scale(1.1);
+}
+
+.task-action-button:active {
+  transform: scale(0.95);
+}
+
+/* Loading spinner personalizado */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Micro-interações para elementos interativos */
+.interactive-element {
+  @apply transition-all duration-150 ease-in-out;
+}
+
+.interactive-element:hover {
+  transform: translateY(-1px);
+}
+
+.interactive-element:active {
+  transform: translateY(1px);
+}
+
+/* Efeito de ondulação para botões */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 768px) {
+  .task-card {
+    @apply p-3;
+  }
+  
+  .gradient-header {
+    @apply py-6;
+  }
+  
+  .gradient-header h1 {
+    @apply text-3xl;
+  }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Prioridade das tarefas */
+.priority-low {
+  border-left: 8px solid #28a745;
+  background-color: #eafaf1;
+}
+
+.priority-medium {
+  border-left: 8px solid #ffc107;
+  background-color: #fffbe6;
+}
+
+.priority-high {
+  border-left: 8px solid #dc3545;
+  background-color: #fdeaea;
+}
