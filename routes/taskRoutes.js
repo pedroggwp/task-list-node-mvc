@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const taskController = require("../controllers/taskController"); // A Rota precisa saber qual Controller chamar
 
-// Rota para a página inicial (listar todas as tarefas)
-router.get("/", taskController.showTasks);
+// Rota para a página inicial (listar todas as tarefas) - agora usa o handler que trata o query param "filter"
+router.get("/", taskController.showAllTasks);
 
 // Rota para a página de formulário de criação
 router.get("/create", taskController.createTask);

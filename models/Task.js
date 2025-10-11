@@ -13,6 +13,14 @@ const Task = db.define("Task", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  priority: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1,
+  },
+  dueDate: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
 });
 
 module.exports = Task;

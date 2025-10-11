@@ -1,12 +1,29 @@
-<h2>Editando a tarefa: {{task.title}}</h2>
-<form action="/tasks/edit" method="post">
+<h2 class="task-card font-bold mb-4">Editando a tarefa: {{task.title}}</h2>
+<form action="/tasks/edit" method="post" class="task-card mb-4">
   <input type="hidden" name="id" value="{{task.id}}" />
-  <label>Título:</label><br>
-  <input type="text" name="title" value="{{task.title}}" required/><br>
-  <label>Descrição:</label><br>
-  <input type="text" name="description" value="{{task.description}}" /><br><br>
-  <label for="done">Concluída?</label>
-  <input type="checkbox" id="done" name="done" {{#if task.done}}checked{{/if}}/>
-  <br><br>
-  <button type="submit">Salvar Alterações</button>
+  <div class="mb-4">
+    <label class="font-medium">Título:</label>
+    <input type="text" name="title" value="{{task.title}}" required class="form-input" />
+  </div>
+  <div class="mb-4">
+    <label class="font-medium">Descrição:</label>
+    <input type="text" name="description" value="{{task.description}}" class="form-input" />
+  </div>
+  <div class="mb-4">
+    <label class="font-medium">Prioridade:</label>
+    <select name="priority" class="form-input">
+      <option value="1" {{#if task.isPriority1}}selected{{/if}}>Baixa</option>
+      <option value="2" {{#if task.isPriority2}}selected{{/if}}>Média</option>
+      <option value="3" {{#if task.isPriority3}}selected{{/if}}>Alta</option>
+    </select>
+  </div>
+  <div class="mb-4">
+    <label for="done" class="font-medium">Concluída?</label>
+    <input type="checkbox" id="done" name="done" {{#if task.done}}checked{{/if}} />
+  </div>
+  <div class="mb-4">
+    <label class="font-medium">Data de Entrega:</label>
+    <input type="date" name="dueDate" class="form-input" value="{{task.dueDate}}" />
+  </div>
+  <button type="submit" class="btn-primary ripple-effect interactive-element">Salvar Alterações</button>
 </form>

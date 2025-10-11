@@ -1,22 +1,55 @@
-<h2>Todas as Tarefas:</h2>
+<h2 class="task-card font-bold mb-4">Todas as Tarefas:</h2>
+
+<div class="mb-4 flex gap-2">
+  <a href="/tasks" class="btn-secondary task-action-button interactive-element {{#unless filter}}active{{/unless}}">Todas</a>
+  <a href="/tasks?filter=pending"
+    class="btn-warning task-action-button interactive-element {{#if isPending}}active{{/if}}">
+    Pendentes
+  </a>
+
+  <a href="/tasks?filter=completed"
+    class="btn-success task-action-button interactive-element {{#if isCompleted}}active{{/if}}">
+    Concluídas
+  </a>
+</div>
+
 {{#if tasks.length}}
   <ul>
     {{#each tasks}}
-      <li>
-        <b>{{this.title}}</b> - {{this.description}} - 
-        {{#if this.done}}
-            ✅ Concluída
-        {{else}}
-            🕗 Pendente
-        {{/if}}
-        <a href="/tasks/edit/{{this.id}}">Editar</a>
-        <form style="display:inline;" method="post" action="/tasks/delete">
-          <input type="hidden" name="id" value="{{this.id}}"/>
-          <button type="submit">Excluir</button>
-        </form>
+      <li class="task-card mb-4 {{this.priorityClass}}">
+        <div>
+          <span class="{{#if this.done}}task-completed{{/if}}">
+            {{this.title}}
+          </span>
+          {{#if this.description}}
+            <span>{{this.description}}</span>
+          {{/if}}
+          <span class="badge {{#if this.done}}status-completed{{else}}status-pending{{/if}}">
+            {{#if this.done}}
+              ✅ Concluída
+            {{else}}
+              🕗 Pendente
+            {{/if}}
+          </span>
+          <span class="ml-2">
+            Prioridade: {{this.priorityText}}
+          </span>
+          {{#if this.dueDate}}
+            <span class="ml-2">
+              Data de Entrega: {{this.dueDate}}
+            </span>
+          {{/if}}
+        </div>
+        <div>
+          <a href="/tasks/edit/{{this.id}}" class="btn-secondary task-action-button interactive-element">Editar</a>
+          <form style="display:inline;" method="post" action="/tasks/delete">
+            <input type="hidden" name="id" value="{{this.id}}"/>
+            <button type="submit" class="btn-warning task-action-button interactive-element">Excluir</button>
+          </form>
+        </div>
       </li>
     {{/each}}
   </ul>
 {{else}}
-  <p>🎉 Nenhuma tarefa cadastrada. Que tal criar uma nova?</p>
+  <p class="task-card text-center">🎉 Nenhuma tarefa cadastrada. Que tal criar uma nova?</p>
 {{/if}}

@@ -5,6 +5,20 @@ module.exports = {
   async showTasks(req, res) {
     // Pede ao Model para buscar TODAS as tarefas no banco. `raw: true` simplifica os dados.
     const tasks = await Task.findAll({ raw: true });
+
+    tasks.forEach((task) => {
+      if (task.priority === 3) {
+        task.priorityText = "Alta";
+        task.priorityClass = "priority-high";
+      } else if (task.priority === 2) {
+        task.priorityText = "Média";
+        task.priorityClass = "priority-medium";
+      } else {
+        task.priorityText = "Baixa";
+        task.priorityClass = "priority-low";
+      }
+    });
+
     // Renderiza a view 'all.handlebars' e envia o objeto { tasks } com os dados do banco
     res.render("all", { tasks });
   },
@@ -16,14 +30,19 @@ module.exports = {
 
   // Função para SALVAR uma nova tarefa no banco
   async saveTask(req, res) {
-    // Pega os dados enviados pelo formulário no corpo (body) da requisição
-    await Task.create({
-      title: req.body.title,
-      description: req.body.description,
-      done: false, // O status inicial é sempre 'false'
-    });
-    // Redireciona o usuário para a página inicial após a criação
-    res.redirect("/tasks");
+    const { title, description, priority, dueDate } = req.body;
+    try {
+      await Task.create({
+        title,
+        description,
+        priority: parseInt(priority, 10) || 1,
+        dueDate,
+        done: false,
+      });
+      res.redirect("/tasks");
+    } catch (err) {
+      res.status(500).send("Erro ao criar tarefa");
+    }
   },
 
   // Função para RENDERIZAR a página de edição com dados de UMA tarefa
@@ -38,18 +57,22 @@ module.exports = {
 
   // Função para ATUALIZAR uma tarefa no banco
   async updateTask(req, res) {
-    // Pega o 'id' que vem do campo escondido (<input type="hidden">) do formulário
-    const id = req.body.id;
-    await Task.update(
-      {
-        title: req.body.title,
-        description: req.body.description,
-        // Lógica para checkbox: se ele for marcado, req.body.done será 'on', senão será 'undefined'.
-        done: req.body.done === "on" ? true : false,
-      },
-      { where: { id: id } } // Cláusula WHERE: atualize APENAS a tarefa com este id
-    );
-    res.redirect("/tasks");
+    const { id, title, description, done, priority, dueDate } = req.body;
+    try {
+      await Task.update(
+        {
+          title,
+          description,
+          done: !!done,
+          priority: parseInt(priority, 10) || 1,
+          dueDate,
+        },
+        { where: { id } }
+      );
+      res.redirect("/tasks");
+    } catch (err) {
+      res.status(500).send("Erro ao atualizar tarefa");
+    }
   },
 
   // Função para DELETAR uma tarefa
@@ -57,5 +80,40 @@ module.exports = {
     const id = req.body.id;
     await Task.destroy({ where: { id: id } }); // DELETE FROM Tasks WHERE id = ?
     res.redirect("/tasks");
+  },
+
+  // Função para FILTRAR tarefas por status (pendentes ou concluídas)
+  async showAllTasks(req, res) {
+    const filter = (req.query.filter || "").toLowerCase();
+
+    let where = {};
+
+    if (filter === "pending") {
+      where.done = 0;
+    } else if (filter === "completed") {
+      where.done = 1;
+    }
+
+    const tasks = await Task.findAll({ where, raw: true });
+
+    tasks.forEach((task) => {
+      if (task.priority === 3) {
+        task.priorityText = "Alta";
+        task.priorityClass = "priority-high";
+      } else if (task.priority === 2) {
+        task.priorityText = "Média";
+        task.priorityClass = "priority-medium";
+      } else {
+        task.priorityText = "Baixa";
+        task.priorityClass = "priority-low";
+      }
+    });
+
+    res.render("all", {
+      tasks,
+      filter,
+      isPending: filter === "pending",
+      isCompleted: filter === "completed",
+    });
   },
 };
